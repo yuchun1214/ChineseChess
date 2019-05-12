@@ -25,6 +25,7 @@
 #include <QPoint>
 #include "chess.h"
 #include "path.h"
+#include "text.h"
 
 
 namespace Ui {
@@ -53,6 +54,10 @@ private:
     QVector<Chess *> BlackChess;
     QVector<Path *> paths;
     Chess * RKing,* BKing;
+    char flag;
+    bool movable;
+    Text * text;
+
 
     void LoadChessConfigFile(QString fileName, QVector<Chess *> &,char flag);
     void PaintTheBoard(QString ConfigFileName);
@@ -65,6 +70,7 @@ private:
     bool checkKingToKing();
     void DeletePaths();
     void hideChess(Chess *);
+    void showWinnerAndGameOver();
     QMap<QString, QVector<QPoint> > infiniteMovingVector(QPoint pos,QChar mode = 'a');
 
     bool isBigger(int f,int s);
@@ -72,14 +78,12 @@ private:
     void increment(int &i);
     void decrement(int &i);
 
+
     // here has a special syntax
     QVector<QPoint> MeetChess(QPoint startPos, void(QPoint::*SetFunction)(int),int(QPoint::*variantCoordinate)()const,int Bound, bool(MainWindow::*commparison)(int,int),void(MainWindow::*indecrement)(int &));
     QVector<Path *> generateCannonPath(QMap<QString, QVector<QPoint> >points);
     QVector<Path *> generateCarPath(QMap<QString, QVector<QPoint> >points);
     void ShowAllEnemyPath();
-
-protected:
-    void paintEvent(QPaintEvent *event);
 
 };
 

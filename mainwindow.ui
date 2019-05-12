@@ -19,7 +19,7 @@
      <rect>
       <x>30</x>
       <y>40</y>
-      <width>501</width>
+      <width>571</width>
       <height>421</height>
      </rect>
     </property>
@@ -28,26 +28,13 @@
     <property name="geometry">
      <rect>
       <x>840</x>
-      <y>40</y>
+      <y>240</y>
       <width>131</width>
       <height>51</height>
      </rect>
     </property>
     <property name="text">
      <string>重新開始</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>840</x>
-      <y>190</y>
-      <width>131</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>顯示所有路徑</string>
     </property>
    </widget>
   </widget>

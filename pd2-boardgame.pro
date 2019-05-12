@@ -28,13 +28,15 @@ SOURCES += \
         chess.cpp \
         main.cpp \
         mainwindow.cpp \
-        path.cpp
+        path.cpp \
+        text.cpp
 
 HEADERS += \
         chess.h \
         itembase.h \
         mainwindow.h \
-        path.h
+        path.h \
+        text.h
 
 FORMS += \
         mainwindow.ui

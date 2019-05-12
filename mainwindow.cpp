@@ -5,7 +5,7 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
 {
     ui->setupUi(this);
     this->scene = new QGraphicsScene();
-    this->selectedChess = NULL;
+    this->selectedChess = nullptr;
     ui->view->setScene(scene);
     ui->view->setFixedSize(800,600);
     this->scene->setSceneRect(SCENE_POS,SCENE_POS,800,600);
@@ -28,6 +28,9 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
     RKing = RedChesses[0];
     BKing = BlackChess[0];
 
+    flag = 'b';
+
+    movable = true;
 
 }
 
@@ -163,10 +166,6 @@ void MainWindow::PaintTheBoard(QString ConfigFileName)
             scene->addItem(lineItem);
         }
     }
-}
-
-void MainWindow::paintEvent(QPaintEvent *event){
-
 }
 
 void MainWindow::buttonClick(){
@@ -408,11 +407,8 @@ QVector<Path *> MainWindow::generateCannonPath(QMap<QString, QVector<QPoint> > p
         }
     }
 
-    qDebug()<<"finish inifnteMv";
-
     for(int i = 0; i < keys.size(); i++){
         for(int j = 0 ; j < points[keys[i]].size(); j ++){
-            qDebug()<<points[keys[i]][j];
             path = new Path(points[keys[i]][j],selectedChess);
             this->paths.append(path);
         }
@@ -445,41 +441,75 @@ QVector<Path *> MainWindow::generateCarPath(QMap<QString, QVector<QPoint> > poin
 }
 
 void MainWindow::Decide(QPoint selectedPos,char who){
+    if(!movable)
+        return;
     int objectAmount = ui->view->items(QPoint(selectedPos.x() - ERRONEOUSX, selectedPos.y() - ERRONEOUSY)).size();
-    qDebug()<<"objectAmount" << objectAmount;
-    qDebug()<<"who is "<<who<<"\n";
     if(objectAmount == 1){
         if(who == 'c'){
             // create the path
-            generatePaths();
+            if(selectedChess->Flag() == this->flag){
+                qDebug()<<"現在不是輪到你喔！！";
+                this->text = new Text(QString("現在不是輪到你喔"));
+                this->scene->addItem(text);
+            }else{
+                qDebug()<<"before delete this->text";
+                if(this->text){
+                    delete this->text;
+                    this->text = nullptr;
+                }
+                qDebug()<<"delete this->text";
+                generatePaths();
+            }
 
         }else if(who == 'p'){
             // move the chess
-            qDebug()<<"chess move";
+
             QPoint temp = this->selectedChess->RelativePos();
             this->selectedChess->Move(selectedPos);
             this->DeletePaths();
             if(!checkKingToKing()){
-
                 this->selectedChess->Move(temp);
+            }else{
+                qDebug()<<"462 edit flag";
+                this->flag = (this->flag == 'r' ? 'b' : 'r');
             }
+
         }
     }else if(objectAmount == 2){
         // means that there are two objects on the same pos, one is path and another is enemy
-//        qDebug()<<"objectAmount is 2";
-//        qDebug()<<"==========="<<selectedPos<<"============";
         char flag = selectedChess->Flag();
         QVector<Chess *> & chooseEnemy = (flag == 'r' ? BlackChess : RedChesses);
         for(QVector<Chess *>::iterator it = chooseEnemy.begin(); it != chooseEnemy.end(); it++){
             if((*it)->RelativePos() == selectedPos){
-                delete  *it;
+                qDebug()<<"==========Name is=========="<<(*it)->Name();
+                if((*it)->Name() == QString("King")){
+                    this->showWinnerAndGameOver();
+                }
+                delete *it;
                 chooseEnemy.erase(it);
                 break;
             }
         }
         this->selectedChess->Move(selectedPos);
         this->DeletePaths();
+        qDebug()<<"487edit Flag";
+        this->flag = ((this->flag == 'r') ? 'b' : 'r');
     }
+    qDebug()<<"485 flag is "<<this->flag;
+}
+
+void MainWindow::showWinnerAndGameOver(){
+    if(flag == 'r'){
+        qDebug()<<"Black Win";
+        this->text = new Text("黑色贏了！！");
+        this->scene->addItem(text);
+    }else{
+        qDebug()<<"Red Win";
+        this->text = new Text("紅色贏了！！");
+        this->scene->addItem(text);
+    }
+
+    movable = false;
 
 }
 
@@ -533,6 +563,12 @@ void MainWindow::ResetBoard(){
 
     RKing = RedChesses[0];
     BKing = BlackChess[0];
+    movable = true;
+    flag = 'b';
+    if(this->text){
+        delete this->text;
+        this->text = nullptr;
+    }
 }
 
 MainWindow::~MainWindow()
