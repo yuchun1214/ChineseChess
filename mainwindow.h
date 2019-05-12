@@ -8,14 +8,11 @@
 #define ERRONEOUSY -95
 
 #include <QMainWindow>
-
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
 #include <QGraphicsLineItem>
-
 #include <QDebug>
 #include <QPainter>
-
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -45,6 +42,7 @@ public slots:
     void Test();
     void chessClicked(Chess * selectedChess);
     void pathClicked(QPoint pos);
+    void ResetBoard();
 
 private:
 
@@ -78,7 +76,6 @@ private:
     QVector<QPoint> MeetChess(QPoint startPos, void(QPoint::*SetFunction)(int),int(QPoint::*variantCoordinate)()const,int Bound, bool(MainWindow::*commparison)(int,int),void(MainWindow::*indecrement)(int &));
     QVector<Path *> generateCannonPath(QMap<QString, QVector<QPoint> >points);
     QVector<Path *> generateCarPath(QMap<QString, QVector<QPoint> >points);
-
     void ShowAllEnemyPath();
 
 protected:

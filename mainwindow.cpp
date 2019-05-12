@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
     ui->view->setFixedSize(800,600);
     this->scene->setSceneRect(SCENE_POS,SCENE_POS,800,600);
 //    connect(ui->test,SIGNAL(clicked(bool)),this,SLOT(buttonClick()));
+    connect(ui->reset, SIGNAL(clicked(bool)), this, SLOT(ResetBoard()));
 
 
     this->PaintTheBoard(QString(":/BoardConfig/lineConfig.json"));
@@ -466,10 +467,13 @@ void MainWindow::Decide(QPoint selectedPos,char who){
     }else if(objectAmount == 2){
         // means that there are two objects on the same pos, one is path and another is enemy
 //        qDebug()<<"objectAmount is 2";
-        QList<QGraphicsItem * > items = ui->view->items(QPoint(selectedPos.x() - ERRONEOUSX, selectedPos.y() - ERRONEOUSY));
-        for(int i = 0 ; i < 2; i++){// attack the enemy
-            if(typeid (*(items[i])).name() == typeid (Chess).name()){
-                delete items[i];
+//        qDebug()<<"==========="<<selectedPos<<"============";
+        char flag = selectedChess->Flag();
+        QVector<Chess *> & chooseEnemy = (flag == 'r' ? BlackChess : RedChesses);
+        for(QVector<Chess *>::iterator it = chooseEnemy.begin(); it != chooseEnemy.end(); it++){
+            if((*it)->RelativePos() == selectedPos){
+                delete  *it;
+                chooseEnemy.erase(it);
                 break;
             }
         }
@@ -486,6 +490,49 @@ void MainWindow::ShowAllEnemyPath(){
         generatePaths();
     }
     selectedChess = temp;
+}
+
+void MainWindow::ResetBoard(){
+    // reset the chess;
+    qDebug()<<"in reset board";
+    qDebug()<<RedChesses.size();
+    qDebug()<<BlackChess.size();
+    for(int i = 0, size = RedChesses.size(); i < size; i++){
+        delete RedChesses[i];
+    }
+    RedChesses.clear();
+
+    for(int i = 0, size = BlackChess.size(); i < size; i++){
+        delete BlackChess[i];
+    }
+    BlackChess.clear();
+    qDebug()<<"Reset the chess safe";
+
+    // reset the path
+    for(int i = 0, size = paths.size(); i < size; i++){
+        delete paths[i];
+    }
+    paths.clear();
+    qDebug()<<"Reset the paths safe";
+
+    // reset the selectChess, Kings
+    selectedChess = RKing = BKing = nullptr;
+    qDebug()<<"reset selectedChess safe";
+
+    // reload the chess
+    this->LoadChessConfigFile(QString(":/ChessConfig/RedConfig.json"), RedChesses,'r');
+    this->LoadChessConfigFile(QString(":/ChessConfig/BlackConfig.json"),BlackChess,'b');
+
+
+    for(int i = 0, size = RedChesses.size(); i < size; i++){
+        connect(RedChesses[i],SIGNAL(BeClicked(Chess*)),this,SLOT(chessClicked(Chess *)));
+    }
+    for(int i = 0, size = BlackChess.size(); i < size; i++){
+        connect(BlackChess[i], SIGNAL(BeClicked(Chess*)),this, SLOT(chessClicked(Chess *)));
+    }
+
+    RKing = RedChesses[0];
+    BKing = BlackChess[0];
 }
 
 MainWindow::~MainWindow()
