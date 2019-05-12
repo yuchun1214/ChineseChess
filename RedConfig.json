@@ -1,0 +1,157 @@
+[
+    {
+        "name" : "King",
+        "pos" : [
+            [4,0]
+        ],
+        "weight" : 100,
+        "border" : {
+            "x" : [3,5],
+            "y" : [0,2]
+        },
+        "surpass" : false,
+        "movingVector" : [
+            [1,0],
+            [-1,0],
+            [0,1],
+            [0,-1]
+        ],
+        "path" : ":/ChessImg/Red/RedKing.png"
+
+    },
+    {
+        "name" : "Guard",
+        "pos" : [
+            [3,0],
+            [5,0]
+        ],
+        "weight" : 100,
+        "border" : {
+            "x" : [3,5],
+            "y" : [0,2]
+        },
+        "surpass" : false,
+        "movingVector" : [
+            [1,1],
+            [-1,-1],
+            [1,-1],
+            [-1,1]
+        ],
+        "path" : ":/ChessImg/Red/RedGuard.png"
+    },
+    {
+        "name" : "Minister",
+        "pos" : [
+            [2,0],
+            [6,0]
+        ],
+        "weight" : 100,
+        "border" : {
+            "x" : [0,8],
+            "y" : [0,4]
+        },
+        "surpass" : false,
+        "movingVector" : [
+            [2,2],
+            [-2,-2],
+            [2,-2],
+            [-2,2]
+        ],
+        "barrier" : [
+            [1,1],
+            [-1,-1],
+            [1,-1],
+            [-1,1]
+        ],
+        "path" : ":/ChessImg/Red/RedMinister.png"
+    },
+    {
+        "name" : "Horse",
+        "pos" : [
+            [1,0],
+            [7,0]
+        ],
+        "weight" : 100,
+        "border" : {
+            "x" : [0,8],
+            "y" : [0,9]
+        },
+        "surpass" : false,
+        "movingVector" : [
+            [2,1],
+            [2,-1],
+            [-2,1],
+            [-2,-1],
+            [1,2],
+            [1,-2],
+            [-1,2],
+            [-1,-2]
+        ],
+        "barrier":[
+            [1,0],
+            [1,0],
+            [-1,0],
+            [-1,0],
+            [0,1],
+            [0,-1],
+            [0,1],
+            [0,-1]
+        ],
+        "path" : ":/ChessImg/Red/RedHorse.png"
+    },
+    {
+        "name" : "Car",
+        "pos" : [
+            [0,0],
+            [8,0]
+        ],
+        "weight" : 100,
+        "surpass" : false,
+        "movingVector" : null,
+        "border" : {
+            "x" : [0,8],
+            "y" : [0,9]
+        },
+        "path" : ":/ChessImg/Red/RedCar.png"
+    },
+    {
+        "name" : "Soldiers",
+        "pos" : [
+            [0,3],
+            [2,3],
+            [4,3],
+            [6,3],
+            [8,3]
+        ],
+        "weight" : 100,
+        "border" : {
+            "x" : [0,8],
+            "y" : [0,4]
+        },
+        "surpass" : true,
+        "movingVector":[
+            [0,1]
+        ],
+        "addingVector" : [
+            [1,0],
+            [-1,0]
+        ],
+        "path" : ":/ChessImg/Red/RedSoldiers.png"
+    },
+    {
+        "name" : "Cannon",
+        "pos" : [
+            [1,2],
+            [7,2]
+        ],
+        "weight" : 100,
+        "border" : {
+            "x" : [0,8],
+            "y" : [0,9]
+        },
+        "surpass" : false,
+        "movingVector":null,
+        "path" : ":/ChessImg/Red/RedCannon.png"
+    }
+]
+

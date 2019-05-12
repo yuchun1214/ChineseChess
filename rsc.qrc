@@ -1,0 +1,27 @@
+<RCC>
+    <qresource prefix="/BoardConfig">
+        <file>lineConfig.json</file>
+    </qresource>
+    <qresource prefix="/ChessConfig">
+        <file>BlackConfig.json</file>
+        <file>RedConfig.json</file>
+    </qresource>
+    <qresource prefix="/ChessImg/Black">
+        <file>BlackCannon.png</file>
+        <file>BlackCar.png</file>
+        <file>BlackGuard.png</file>
+        <file>BlackHorse.png</file>
+        <file>BlackKing.png</file>
+        <file>BlackMinister.png</file>
+        <file>BlackSoldiers.png</file>
+    </qresource>
+    <qresource prefix="/ChessImg/Red">
+        <file>RedCannon.png</file>
+        <file>RedCar.png</file>
+        <file>RedGuard.png</file>
+        <file>RedHorse.png</file>
+        <file>RedKing.png</file>
+        <file>RedMinister.png</file>
+        <file>RedSoldiers.png</file>
+    </qresource>
+</RCC>

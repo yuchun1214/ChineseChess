@@ -25,11 +25,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        chess.cpp \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+        path.cpp
 
 HEADERS += \
-        mainwindow.h
+        chess.h \
+        itembase.h \
+        mainwindow.h \
+        path.h
 
 FORMS += \
         mainwindow.ui
@@ -38,3 +43,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    rsc.qrc
